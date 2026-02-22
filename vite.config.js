@@ -36,6 +36,16 @@ export default defineConfig(({ mode }) => {
         },
         protocolImports: true,
       }),
+      // Fix @wagmi/connectors optional-dep stub chunk that emits invalid syntax (Expected ";" but found "export")
+      {
+        name: 'fix-wagmi-connectors-chunk',
+        renderChunk(code, chunk) {
+          if (chunk.fileName && chunk.fileName.includes('connectors_false')) {
+            return code.replace(/\)export\s*\{/g, ');\nexport {');
+          }
+          return null;
+        },
+      },
       // Plugin to fix WebAssembly MIME type for CoFHE
       {
         name: 'configure-response-headers',
@@ -68,6 +78,9 @@ export default defineConfig(({ mode }) => {
         "@cosmjs/amino",
         "@cosmjs/proto-signing",
         "@cosmjs/stargate",
+        "wagmi",
+        "connectkit",
+        "@wagmi/connectors",
       ],
       esbuildOptions: {
         define: {

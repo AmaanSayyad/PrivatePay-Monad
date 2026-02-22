@@ -1,6 +1,7 @@
 import { WagmiProvider, createConfig, http } from "wagmi";
+import { injected, walletConnect } from "wagmi/connectors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ConnectKitProvider as FamilyConnectKitProvider, getDefaultConfig } from "connectkit";
+import { ConnectKitProvider as FamilyConnectKitProvider } from "connectkit";
 
 const monadTestnet = {
     id: 10143,
@@ -20,25 +21,18 @@ const monadTestnet = {
     },
 };
 
-const config = createConfig(
-    getDefaultConfig({
-        chains: [monadTestnet],
-        transports: {
-            [monadTestnet.id]: http("https://testnet-rpc.monad.xyz/"),
-        },
+const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || "3fcc6bba6f1de962d911bb5b5c3dba68";
 
-        // Required API Keys
-        walletConnectProjectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || "3fcc6bba6f1de962d911bb5b5c3dba68",
-
-        // Required App Info
-        appName: "PrivatePay Monad",
-
-        // Optional App Info
-        appDescription: "Your private payment app on Monad",
-        appUrl: typeof window !== "undefined" ? window.location.origin : "https://privatepay.monad",
-        appIcon: "https://privatepay.monad/assets/squidl-only.svg",
-    })
-);
+const config = createConfig({
+    chains: [monadTestnet],
+    connectors: [
+        injected(),
+        walletConnect({ projectId }),
+    ],
+    transports: {
+        [monadTestnet.id]: http("https://testnet-rpc.monad.xyz/"),
+    },
+});
 
 const queryClient = new QueryClient();
 
