@@ -15,7 +15,9 @@
     "preview": "vite preview",
     "sync:axelar-zk": "node scripts/sync-axelar-pool-zk-artifacts.mjs",
     "test": "vitest --run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "contract:compile": "hardhat compile",
+    "contract:deploy": "hardhat run scripts/deploy-treasury.cjs --network monad"
   },
   "dependencies": {
     "@arcium-hq/client": "^0.5.1",
@@ -105,12 +107,14 @@
     "circomlibjs": "^0.1.7",
     "concurrently": "^9.1.0",
     "crypto-browserify": "^3.12.0",
+    "dotenv": "^16.6.1",
     "eslint": "^9.9.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "fast-check": "^3.15.0",
     "globals": "^15.9.0",
+    "hardhat": "^2.28.6",
     "jest": "^29.7.0",
     "postcss": "^8.4.47",
     "readable-stream": "^3.6.2",
