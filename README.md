@@ -8,8 +8,8 @@ Simply means “Stealth Crypto Payments using multilayer forks”
 | | Link |
 |---|------|
 | **Pitch deck** | *https://docs.google.com/presentation/d/1epRVTSwU3T280627n6GII3M0YTNOai0EKIUS4GKGYh8/edit?usp=sharing* |
-| **Live link** | 
-| **Demo video** | 
+| **Live link** | *https://private-pay-monad.vercel.app/* | 
+| **Demo video** | *https://testnet.monadvision.com/address/0x83CC763c3D80906B62e79c0b5D9Ab87C3D4D1646?type=Transactions* , *https://testnet.monadvision.com/address/0xa35Bd929a3554bf07908e3131a7Df305849Cd25F* |
 
 ---
 
