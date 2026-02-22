@@ -49,6 +49,11 @@ export function useAppWallet() {
     return null;
   }, [walletClient, address]);
 
+  // Close ConnectKit modal when already connected (avoids stuck WalletConnect QR / 403)
+  useEffect(() => {
+    if (isConnected) setOpen(false);
+  }, [isConnected, setOpen]);
+
   useEffect(() => {
     console.log("[useAppWallet] Current State:", {
       address,
