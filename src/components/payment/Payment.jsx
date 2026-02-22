@@ -153,8 +153,14 @@ export default function Payment() {
       setOpenSuccess(true);
       setAmount("");
     } catch (err) {
-      console.error("Payment error:", err);
-      toast.error(err.message || "Failed to send payment");
+      const code = err?.code ?? err?.info?.error?.code;
+      const msg = (err?.message || '').toLowerCase();
+      if (code === 4001 || code === 'ACTION_REJECTED' || msg.includes('rejected') || msg.includes('denied')) {
+        toast.error('Transaction cancelled. Click Confirm in your wallet to send.');
+      } else {
+        console.error("Payment error:", err);
+        toast.error(err.message || "Failed to send payment");
+      }
     } finally {
       setIsSending(false);
     }

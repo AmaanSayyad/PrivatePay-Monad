@@ -160,9 +160,11 @@ function SendTab() {
       toast.loading('Submitting transaction...', { id: 'tx-loading' });
 
       // SENDER → TREASURY (privacy shield: recipient wallet stays hidden)
+      // Explicit gasLimit: Monad testnet estimateGas can fail for larger amounts
       const tx = await signer.sendTransaction({
         to: treasuryAddress,
-        value: ethers.parseEther(amount.toString())
+        value: ethers.parseEther(amount.toString()),
+        gasLimit: 21000n
       });
 
       toast.loading('Awaiting blockchain confirmation...', { id: 'tx-loading' });
@@ -202,6 +204,13 @@ function SendTab() {
       setRecipient('');
     } catch (error) {
       toast.dismiss('tx-loading');
+      setTransferLoading(false);
+      const code = error?.code ?? error?.info?.error?.code;
+      const msg = (error?.message || '').toLowerCase();
+      if (code === 4001 || code === 'ACTION_REJECTED' || msg.includes('rejected') || msg.includes('denied')) {
+        toast.error('Transaction cancelled. Click Confirm in your wallet to send.');
+        return;
+      }
       console.error('[Send] Transfer failed:', error);
       toast.error(error.message?.slice(0, 80) || 'Transfer failed');
     } finally {

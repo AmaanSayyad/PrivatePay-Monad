@@ -376,8 +376,7 @@ function StepOne({ setStep, setOpen }) {
     <>
       <p className="text-2xl font-semibold">Let's get started!</p>
       <p className="text-lg mt-4">
-        Pick a cool username for your SQUIDL. This will be your payment link and
-        ENS, so anyone can easily send you money
+        Pick a cool username for your PrivatePay. This will be your payment link, so anyone can easily send you money
       </p>
       <div className="mt-8 rounded-xl size-24 aspect-square bg-neutral-100 overflow-hidden mx-auto">
         <img
